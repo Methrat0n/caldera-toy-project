@@ -1,0 +1,22 @@
+version: "3"
+services:
+  db:
+    build:
+      dockerfile: docker/db-Dockerfile
+      context: ..
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: unsafe
+      
+  admin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@test.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "80:80"
+    restart: unless-stopped
